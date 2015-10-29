@@ -1,0 +1,242 @@
+#########################################
+# DESIGN DOC - PWNEX COMM CLIENT        #
+# REV 1                                 # 
+# I PROLLY WILL NEVER WRITE THIS        #  
+# BUT I SHOULD                          #  
+# 29 OCT 2015                           #
+#########################################
+
+##PWNEX COMM CLIENT OVERVIEW##
+- Basic communication hub built with Python
+- Functions as a mail client, calendar, task-minder, and info corpus
+- Uses existing modules combined with systemd timer functionality
+- Builds on IMAP clients (maybe) for pulling down mail
+- Does not support ICAL, WEBDAV, or other BS I don't know about
+- Can parse emails from web calendars and create libnotify reminders
+- All text files
+- Creates sub-directories on the fly based on word cloud thing
+- Uses symlinks for tasks or calendar event sub-directories
+- Converts everything to Unix time to make it easier to deal with
+- Calls $EDITOR for whatever to operate on body, header, address test
+- CRUD, what do I do about Address books and GPG Keys?
+- Side note check out keybase.io maybe
+- Maybe has an IRC bot that looks for mentions/DMs
+- Does it display markdown somehow?
+- Does it set up RSS
+- Will it ever work with a Database?
+
+##PYTHON/HELP TOOLS REQ'D for PWNEX
+- Mail Send/Receive
+- SMS Send/Receive
+- File/Directory Read/Write
+- File/Directory Size
+- linux/unix date,remind,systemd,libnotify
+- Python news Corpus
+- Encryption
+- Event Handler
+- Editor (no EMACS!)
+- Browser
+- Priviledge escalation
+- Twitter functionality
+- RSS functionality
+- TUI or GUI Toolkit
+- Telegram
+
+##PWNEX CLASS PLANNING
+- Item ~main~ Class - has properties
+  - Date (Three subclasses)
+    - Received - Unix Time
+    - Due - Unix Time (Can be empty)
+    - Reminder - Unix Time (Can be empty)
+    - Repeating (Can I just use REMIND???)
+      - M,DoW,Y,DoM, None
+      - #of Repeats, Until, Inf
+  - Address
+    - From - string with error checking
+    - To - string with error checking
+    - Source
+      - Corpus
+      - Twitter
+  - Subject
+    - String of 140 chars (mebbe inc twitter or something)
+  - Body
+    - Text file
+  - GPG Key
+  - Set Project
+  - Active/Inactive
+  - Is Special (user setup,command list) - hidden property
+  - Is Hashed (encrypted, encrypted setup)
+  - Storage Location
+  - Size
+  - Has Attachment?
+  - Has HTML?
+- Reminder Class - has properties
+  - Due - Unix Time
+    - Date
+    - Time
+    - Repeat?
+  - Reminder
+    - Subject
+    - Body
+    - Reminder Time 
+      - 15, 60, Day
+    - Type
+      - Mail
+	- To
+	- List or Single
+      - SMS
+        - Number
+	- Provider
+      - Notify-Send
+        - Icon
+        - Duration
+        - Click to Clear Y/N
+- Sort Pattern
+  - Word Cloud Cat
+    - Is Project (Permanent Category)
+    - Is Interest (Temporary Category)
+  - # of Cat (plus Unsorted)
+  - Due Cat (Symlinked Subdirs)
+    - Today
+    - Tomorrow
+    - This Week
+    - This Month
+    - Future
+  - Rem Cat (Symlinked Subdirs)
+    - 15 min
+    - 60 min
+    - Day
+- Corpus Class
+  - Search Term
+  - Repeat
+    - Daily
+    - OneTime
+- System
+  - Clock (Time Keeper)
+    - systemd Unit
+    - OnCalendar Time
+  - Remind
+    - Remind Folder
+  - Python
+    - Version
+    - Modules
+  - 
+- Event Keys
+  - Manual Send/Receive
+  - Mark/Unmark Project
+  - Create Project
+  - Create Mail
+  - Calculate Word Cloud Sort
+  - Kill Project
+  - Set Reminder (Inherit Subj Body)
+    - Reminder Time (15,60,Day)
+    - Reminder Type (Mail, SMS, Notify-Send)
+  - Setup
+    - Test System and Rights
+    - User
+    - Add/Change SMS #
+    - Add/Change SMS Prov
+    - Test SMS
+    - Add/Change Mail Account
+    - Test Mail
+    - Add/Change Twitter Account
+    - Add/Change Twitter Search
+    - Test Twitter
+    - Add/Change Corpus Search (Daily or One Time)
+    - Generate GPG
+    - Revoke GPG
+  - Remove Mail Account
+    - Archive Old Emails from REM account (happens on removed accts)
+  - View Projects
+  - View Reminders
+  - View Items
+  - Sort Items,Reminders,Projects
+  - Delete Items,Reminders,Projects
+  - Archive/Unarchive Items,Reminders,Projects
+  - Edit Items,Reminders,Projects
+  - Search Projects, Items
+  - Show Storage Stats
+  - Show Commands
+  - Show About
+  - Exit
+
+##PWNEX FUNCTION PLANNING
+- SetUp
+  - Test System
+    - Returns OK or Message No systemd
+    - Checks Python Version
+    - Checks Python Modules
+    - Checks for Editor
+    - Checks for/Installs Remind
+    - Checks for tar
+  - Test Rights
+    - Can su to root or sudo
+  - Setup User
+    - Add/Change Main directory
+    - Add/Change SMS
+    - Add/Change Email
+    - Add/Change Twitter
+    - Add/Change Corpus
+    - Add/Revoke GPG
+    - Add/Change Search Eng
+    - Add/Change Browser Call
+    - Add/Change Project
+    - Add/Change Editor
+  - Setup Environment
+    - TUI - Inherits environment
+    - GUI - (Future)
+      - Background Color
+      - Foreground Color
+      - Link Color
+      - Item Color by type
+      - Item Shade by Reminder Proximity
+  - Test SetUp
+    - Email
+    - SMS
+    - Twitter
+    - Browser Call
+    - Editor
+    - Main Directory is writeable
+- Create New Item
+  - Set Type
+  - Set Date
+  - Set Due
+  - Set Reminder
+  - Set Body
+  - Set Project 
+  - Set Active/Saved
+  - Set/Unset Attachment
+- Edit/View Item
+  - Set Type
+  - Set Date
+  - Set Due
+  - Set Reminder
+  - Set Body
+  - Set Project
+  - Set Active/Saved
+  - Set/Unset Attachement
+  - Save Attachment
+- Delete Item
+  - Set Archived (tar'd - doesnt appear in view)
+  - Set Permanent Delete
+- Show Archived/Deleted
+- Activate Archive
+- Send Item
+  - Send Email
+  - Send Tweet (Maybe Telegram)
+  - Send IRC???
+  - Send New Corpus Search
+    - (Use static site generator algorythm?) I dunno
+  - Send
+- Save Item
+- Show About
+- Search Item
+  - By All Item Fields
+- Error Handling
+  - Main Folder is gone/unwritable
+  - Sub Folder is gone/unwritable
+  - Bad Search Result
+  - Start Up Check Failed
+  - Crash
+
+
