@@ -1,2 +1,0 @@
-# pwnex
-Persnonal Communication Hub
