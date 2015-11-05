@@ -1,0 +1,22 @@
+##Python modules for pwnex
+
+- [imaplib](https://docs.python.org/2/library/imaplib.html)
+- [os](https://docs.python.org/2/library/os.html)
+- [subprocess](https://docs.python.org/2/library/subprocess.html)
+- [sys](https://docs.python.org/2/library/sys.html)
+- [sqlite3](http://zetcode.com/db/sqlitepythontutorial/)
+- [ical](http://icalendar.readthedocs.org/en/latest/)
+- [twitter](https://github.com/geduldig/TwitterAPI)
+- [twitter](https://github.com/ckoepp/TwitterSearch)
+- [selenium](
+- [news corpus](http://skillachie.github.io/news-corpus-builder/)
+- [gnupg](https://github.com/isislovecruft/python-gnupg) 
+- [corpus](http://pythonhosted.org/Corpora/)
+- [markdown](https://pythonhosted.org/Markdown/)
+- [json](
+- [yaml]
+- [gui](https://wiki.gnome.org/action/show/Projects/PyGObject)
+- [gui](https://wiki.python.org/moin/TkInter)
+- [gui](http://kivy.org/)
+- [irc](http://pythonhosted.org/irc/)
+- [word cloud](https://github.com/amueller/word_cloud)
