@@ -1,0 +1,189 @@
+###PWNEX pseudo code
+
+## Classes
+
+#Item Class
+Class Item
+- Item.Date(UnixTime)
+ - Item.Date.received(UnixTime)
+ - Item.Date.Due(UnixTime)
+ - Item.Date.Sent(UnixTime)
+ - Item.Date.Reminder(UnixTime)
+ - Item.Date.Reminder.onetime(UnixTime,bool)
+ - Item.Date.Reminder.repeating(UnixTime,char)
+   - Item.Date.Reminder.Month(UnixTime,char)
+   - Item.Date.Reminder.DayofWeek(UnixTime,char)
+   - Item.Date.Reminder.Year(UnixTime,char)
+   - Item.Date.Reminder.DayofMonth(UnixTime,char)
+- Item.Address(string)
+ - Item.Address.from
+ - Item.Address.to
+- Item.Source(string)
+ - Item.Source.email
+ - Item.Source.Twitter
+ - Item.Source.Corpus
+ - Item.Source.News
+- Item.Subject(string)
+- Item.Body(file)
+- Item.GpGkey
+- Item.Project(string)
+- Item.Acitve(bool)
+- Item.IsSpecial(bool)
+ - Item.IsSpecial.setup(file)
+ - Item.IsSpecial.commands(file)
+ - Item.IsSpecial.future()
+- Item.Storage.Loc(dict)
+ - Item.Storage.Project(directory)
+ - Item.Storage.Reminder(directory)
+ - Item.Storage.Active
+- Item.Attachment
+ - Item.attachment.Storage.Loc
+- Item.isHashed(bool)
+- Item.isHTML(bool)
+- Item.haslink(bool)
+
+#Reminder Class
+Class Reminder
+- Reminder.TimeFrame(integer)
+- Reminder.Delivery(dict Mail, SMS, Notify-Send)
+ - Reminder.Delivery.Mailto(string)
+ - Reminder.Delivery.SMS(dict number, provider)
+ - Reminder.Deliver.NotifySend(dict Icon, Duration, Click to Clear)
+
+#Sort Pattern Class
+Class Sort Pattern
+- Sort.WordCloud(Dict)
+ - Sort.WordCloud.Project(Dict of Directories)
+ - Sort.WordCloud.Interest(Dict of Direcotries)
+ - Sort.WordCloud.Unsorted(Dict)
+ - Sort.WordCloud.Count
+- Sort.DueDate(Dict of Directory)
+ - Sort.Today(Item.Due)
+ - Sort.Tomorrow(Item.Due)
+ - Sort.ThisWeek(Item.Due)
+ - Sort.ThisMonth(Item.Due)
+ - Sort.Future(Item.Due)
+ - Sort.NotDue(Item.Due)
+
+#Error Message Class
+Class Error
+- Error.noconnect
+- Error.nomainfolder
+- Error.Userinvalid
+
+#GUI/TUI Class
+Class TUI
+- Tui.Window.Xsize
+- Tui.Window.Ysize
+- Tui.Frame.Items
+ - Tui.Frame.Items.Columns
+ - Tui.Frame.Items.Select
+ - Tui.Frame.Items.Mark
+ - Tui.Frame.Items.UnMark
+- Tui.Frame.FloatItem
+- Tui.Frame.FloatError
+- Tui.Frame.Actions
+- Tui.Frame.Cloud
+- Tui.Bar.Status
+- Tui.Frame.Select
+
+
+##Function Calls
+
+#Tool Actions
+Function ToolAction
+- ToolAction.Pull
+- ToolAction.Push
+- ToolAction.SortFile
+- ToolAction.Setup
+ - ToolAction.Setup.User
+ - ToolAction.Setup.UI
+ - ToolAction.Setup.Editor
+- ToolAction.View
+ - ToolAction.View.change
+ - ToolAction.View.sort
+- ToolAction.Archive
+- ToolAction.WordCloud
+ - ToolAction.WordCloud.calculate
+ - ToolAction.WordCloud.setchoose
+- ToolAction.Start
+- ToolAction.SaveandExit
+
+#Item Actions
+Function ItemAction
+- ItemAction.Reminder
+ - ItemAction.Reminder.Add
+ - ItemAction.Reminder.Del
+ - ItemAction.Reminder.Chg
+- ItemAction.Newitem
+ - ItemAction.New.mail
+ - ItemAction.New.corpus
+ - ItemAction.New.tweet
+ - ItemAction.New.newsfeed
+- ItemAction.Viewitem
+- ItemAction.Edititem
+- ItemAction.Saveitem
+- ItemAction.Senditem
+- ItemAction.Encrypt
+- ItemAction.Decrypt
+- ItemAction.Deleteitem
+- ItemAction.Archiveitem
+
+#Search Actions
+Function Search
+- Search.Projects
+- Search.Reminder
+- Search.Items
+- Search.ShowResult
+
+#Show Actions
+Function Show
+- Show.StorageStats
+- Show.Commands
+- Show.About
+
+#Filesystem Actions
+Function Filessystem
+- Filesystem.mkdir
+- Filesystem.rmdir
+- Filesystem.link
+- Filesystem.unlink
+
+#OS Actions
+Function OpSysActions
+- OpSysAction.systemdtimer
+- OpSysAction.systemdservice
+- OpSysAction.checkrequirements
+ - OpSysAction.checkrequirements.systemd
+ - OpSysAction.checkrequirements.remind
+ - OpSysAction.checkrequirements.notifysend
+ - OpSysAction.checkrequirements.networking
+ - OpSysAction.checkrequirements.python
+ - OpSysAction.checkrequirements.editor
+
+#DateTime Actions
+Function DateTime
+- DateTime.dateformat.check
+- DateTime.timeformat.check
+- DateTime.dateformat.convert
+- DateTime.timeformat.convert
+
+#Connect Functions
+Function Connect
+- Connect.Imap
+
+
+#EventLoop
+Main Event Loop
+While Running Do
+- Event.keystroke
+ - Event.keystroke.action
+- Event.timer
+ - Event.timer.action
+- If event.crash = true do
+ - crash.responsibly
+- Exit
+
+
+
+ 
